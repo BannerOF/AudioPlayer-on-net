@@ -26,6 +26,7 @@ public class AudioSendTest implements Runnable
 						16,audioFormat.getChannels(),audioFormat.getChannels()*2,audioFormat.getSampleRate(),false);
 				audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 			}
+			NetSend.startWorking();
 		}catch(Exception e) { e.printStackTrace(); }
 	}
 	public void run()
