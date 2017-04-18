@@ -13,7 +13,7 @@ public class AudioSendTest implements Runnable
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
 
-	public AudioSendTest(int tPort, int Port, String tAddress)
+	public AudioSendTest(int tPort, int Port, String tAddress)//{{{
 	{
 		try{
 			NetSend = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
@@ -28,8 +28,8 @@ public class AudioSendTest implements Runnable
 			}
 			NetSend.startWorking();
 		}catch(Exception e) { e.printStackTrace(); }
-	}
-	public void run()
+	}//}}}
+	public void run()//{{{
 	{
 		byte[] readbuf = new byte[320];
 		try{
@@ -42,11 +42,11 @@ public class AudioSendTest implements Runnable
 		{
 			e.printStackTrace();
 		}
-	}
-	public static void main(String args[])
+	}//}}}
+	public static void main(String args[])//{{{
 	{
 		AudioSendTest AST = new AudioSendTest(10010, 10010, "192.168.0.29");
 		Thread thread = new Thread(AST);
 		thread.start();	
-	}
+	}//}}}
 }
