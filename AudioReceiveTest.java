@@ -33,6 +33,7 @@ public class AudioReceiveTest implements Runnable
 	public AudioReceiveTest(int tPort, int Port, String tAddress)//{{{
 	{
 		try{
+			NetReceive = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
 			File file = new File("/test.wav");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat();
