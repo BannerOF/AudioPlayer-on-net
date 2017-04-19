@@ -15,7 +15,7 @@ public class AudioReceiveTest implements Runnable
 	private DataLine.Info dataLineInfo;
 	private ASoNProtocol NetReceive;
 
-	public void run()//{{{
+	public void run()
 	{
 		byte[] readbuf = new byte[320];
 		try{
@@ -29,8 +29,8 @@ public class AudioReceiveTest implements Runnable
 		{
 			e.printStackTrace();
 		}
-	}//}}}
-	public AudioReceiveTest(int tPort, int Port, String tAddress)//{{{
+	}
+	public AudioReceiveTest(int tPort, int Port, String tAddress)
 	{
 		try{
 			NetReceive = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
@@ -51,11 +51,11 @@ public class AudioReceiveTest implements Runnable
 			sourceDataLine.start();
 			NetReceive.startWorking();
 		}catch(Exception e){ e.printStackTrace(); }
-	}//}}}
-	public static void main(String args[])//{{{
+	}
+	public static void main(String args[])
 	{
 		AudioReceiveTest ART = new AudioReceiveTest(10010, 10010, "192.168.0.2");
 		Thread thread = new Thread(ART);
 		thread.start();
-	}//}}}
+	}
 }
