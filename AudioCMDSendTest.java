@@ -29,6 +29,7 @@ public class AudioCMDSendTest implements Runnable, ACoNProtocol.cmdListener
 	{
 		try{
 			CMDSender = new ACoNProtocol(tPort, Port, InetAddress.getByName(tAddress), this);
+			CMDSender.startWorking();
 		}catch(Exception e) { e.printStackTrace(); }
 	}//}}}
 	public static void main(String args[])//{{{
