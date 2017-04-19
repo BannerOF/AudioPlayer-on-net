@@ -3,7 +3,6 @@ import java.net.*;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
 
 public class AudioSendTest implements Runnable
 {
