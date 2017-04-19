@@ -1,5 +1,5 @@
 import javax.sound.sampled.AudioFormat;
-import java.net.*;
+import java.net.InetAddress;
 
 public class ACoNProtocol extends ASoNProtocol
 {
