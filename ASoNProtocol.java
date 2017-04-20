@@ -89,6 +89,8 @@ public class ASoNProtocol
 	public void sendData(byte[] data)//{{{
 	{
 		ASoNPacket tempASoNPacket = new ASoNPacket(serial, data);		
+		tempASoNPacket.setPort(sendPort);
+		tempASoNPacket.setAddress(sendAddress);
 		inputList.put(tempASoNPacket);
 		serial++;
 	}//}}}
