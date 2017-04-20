@@ -34,6 +34,7 @@ public class AudioSendTest implements Runnable
 				byte[] readbuf = new byte[320];
 				audioInputStream.read(readbuf, 0, readbuf.length);		
 				NetSend.sendData(readbuf);	
+				Thread.sleep(0,10);
 			}
 		}catch(Exception e)
 		{
