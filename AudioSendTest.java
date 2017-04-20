@@ -14,7 +14,7 @@ public class AudioSendTest implements Runnable
 	{
 		try{
 			NetSend = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
-			File file = new File("/demo.wav");
+			File file = new File("/test.wav");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat(); 
 			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
