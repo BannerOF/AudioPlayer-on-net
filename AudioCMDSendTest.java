@@ -4,47 +4,40 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
-public class AudioSendTest implements Runnable
+public class AudioCMDSendTest implements Runnable, ACoNProtocol.cmdListener
 {
-	private ASoNProtocol NetSend; 
-	private AudioInputStream audioInputStream;
+	private ACoNProtocol CMDSender;
 	private AudioFormat audioFormat;
+	private AudioInputStream audioInputStream;
 
-	public AudioSendTest(int tPort, int Port, String tAddress)//{{{
+	public void run()//{{{
 	{
 		try{
-			NetSend = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
 			File file = new File("/test.wav");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
-			audioFormat = audioInputStream.getFormat(); 
+			audioFormat = audioInputStream.getFormat();
 			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
 			{
 				audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,audioFormat.getSampleRate(),
 						16,audioFormat.getChannels(),audioFormat.getChannels()*2,audioFormat.getSampleRate(),false);
 				audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 			}
-			NetSend.startWorking();
+			CMDSender.sendCMD_AudioFormat(audioFormat);	
 		}catch(Exception e) { e.printStackTrace(); }
 	}//}}}
-	public void run()//{{{
+	public AudioCMDSendTest(int tPort, int Port, String tAddress)//{{{
 	{
 		try{
-			while(true)
-			{
-				byte[] readbuf = new byte[320];
-				audioInputStream.read(readbuf, 0, readbuf.length);		
-				NetSend.sendData(readbuf);	
-				Thread.sleep(0,10);
-			}
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+			CMDSender = new ACoNProtocol(tPort, Port, InetAddress.getByName(tAddress), this);
+			CMDSender.startWorking();
+		}catch(Exception e) { e.printStackTrace(); }
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioSendTest AST = new AudioSendTest(10010, 10010, "192.168.0.29");
-		Thread thread = new Thread(AST);
-		thread.start();	
+		AudioCMDSendTest ACMDST = new AudioCMDSendTest(10011, 10011, "192.168.0.20");
+		Thread thread = new Thread(ACMDST);
+		thread.start();
 	}//}}}
+	public void onReceiveCMD_Common(byte[] param) { }
+	public void onReceiveCMD_AudioFormat(AudioFormat AF) { }
 }

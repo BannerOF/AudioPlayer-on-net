@@ -90,6 +90,11 @@ public class ACoNProtocol extends ASoNProtocol
 		System.arraycopy(temp, 0, data, 22, temp.length);
 		sendData(data);
 	}//}}}
+	public void startWorking()//{{{
+	{
+		super.startWorking();
+		readCMD.start();
+	}//}}}
 	private void float2byte(float f, byte[] dest, int index)//{{{
 	{
 		int fbit = Float.floatToIntBits(f);

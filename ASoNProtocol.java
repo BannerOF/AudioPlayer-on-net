@@ -1,4 +1,3 @@
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.net.*;
 
@@ -84,10 +83,14 @@ public class ASoNProtocol
 	{
 		netWorking.initSend();
 		netWorking.initReceive();
+		writeSend.start();
+		readReceive.start();
 	}//}}}
 	public void sendData(byte[] data)//{{{
 	{
 		ASoNPacket tempASoNPacket = new ASoNPacket(serial, data);		
+		tempASoNPacket.setPort(sendPort);
+		tempASoNPacket.setAddress(sendAddress);
 		inputList.put(tempASoNPacket);
 		serial++;
 	}//}}}
