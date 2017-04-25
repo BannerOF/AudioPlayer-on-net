@@ -88,7 +88,7 @@ public class ASoNProtocol
 	}//}}}
 	public void sendData(byte[] data)//{{{
 	{
-		ASoNPacket tempASoNPacket = new ASoNPacket(serial, data);		
+		ASoNPacket tempASoNPacket = new ASoNPacket(serial, (short)data.length, data);		
 		tempASoNPacket.setPort(sendPort);
 		tempASoNPacket.setAddress(sendAddress);
 		inputList.put(tempASoNPacket);
@@ -97,6 +97,7 @@ public class ASoNProtocol
 	public ASoNPacket getData() //{{{
 	{
 		try{
+			//System.out.println(outputList.size());
 			return outputList.take(); 
 		}catch(Exception e){
 			e.printStackTrace();
