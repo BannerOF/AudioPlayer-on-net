@@ -3,6 +3,20 @@ import java.net.*;
 
 public class ASoNProtocol
 {
+	public final static int HEADLENGTH = 6;
+	/**
+	 
+	ASoNPacket
+	+-----------------+-----------------+
+	|  32 bit serial  |  16 bit length  |
+	+-----------------+-----------------+
+	|                                   |
+	|               data                |
+	|            0~32767 bit            |
+	|                                   |
+	+-----------------------------------+
+
+	*/
 	protected int sendPort;
 	protected InetAddress sendAddress;
 	protected ASoNNetWorking netWorking;
@@ -54,12 +68,17 @@ public class ASoNProtocol
 	{
 		byte[] buf = tempPacket.getData();
 		int tempserial = tempPacket.getHeader_serial();
-		byte[] data = new byte[buf.length+4];	
+		short templength = tempPacket.getHeader_length();
+		byte[] data = new byte[buf.length+HEADLENGTH];	
+
 		data[0] = (byte) (tempserial & 0xff);    
 		data[1] = (byte) (tempserial >> 8 & 0xff);    
 		data[2] = (byte) (tempserial >> 16 & 0xff);    
 		data[3] = (byte) (tempserial >> 24 & 0xff);    
-		System.arraycopy(buf, 0, data, 4, buf.length);
+
+		data[4] = (byte) (templength >> 0);
+		data[5] = (byte) (templength >> 8);
+		System.arraycopy(buf, 0, data, HEADLENGTH, buf.length);
 		return data;
 	}//}}}
 	protected ASoNPacket byte2ASoNPacket(byte[] data)//{{{
@@ -67,10 +86,11 @@ public class ASoNProtocol
 		int tempserial = (((data[3] & 0xff) << 24)      
 			| ((data[2] & 0xff) << 16)      
 			| ((data[1] & 0xff) << 8)  
-			| ((data[0] & 0xff) << 0));  
-		byte[] tempdata = new byte[data.length-4];	
-		System.arraycopy(data, 4, tempdata, 0, tempdata.length);
-		ASoNPacket tempPacket = new ASoNPacket(tempserial, tempdata);
+			| ((data[0] & 0xff) << 0));
+		short templength = (short)((data[5]<<8) | data[4] & 0xff);
+		byte[] tempdata = new byte[templength];	
+		System.arraycopy(data, HEADLENGTH, tempdata, 0, tempdata.length);
+		ASoNPacket tempPacket = new ASoNPacket(tempserial, templength, tempdata);
 		return tempPacket;
 	}//}}}
 	public ASoNProtocol(int sendPort, int receivePort, InetAddress sendAddress)//{{{

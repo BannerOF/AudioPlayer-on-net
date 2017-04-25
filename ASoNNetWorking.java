@@ -19,7 +19,7 @@ public class ASoNNetWorking
 				try{
 					while(receiveFlag)
 					{
-						byte[] buf = new byte[324];
+						byte[] buf = new byte[1024];
 						DatagramPacket temppacket = new DatagramPacket(buf, buf.length);
 						receiveSocket.receive(temppacket);				
 						dataBuffer.put(temppacket);	

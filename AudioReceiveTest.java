@@ -16,16 +16,11 @@ public class AudioReceiveTest implements Runnable
 
 	public void run()//{{{
 	{
-		int preserial = -1;
 		try{
 			while(true)
 			{
 				ASoNPacket packet = NetReceive.getData();
 				byte[] data = packet.getData();
-				int serial = packet.getHeader_serial();
-				if(serial > preserial+1)
-					System.out.println(serial);
-				preserial = serial;
 				sourceDataLine.write(data, 0, data.length);
 			}
 		}catch(Exception e)
@@ -57,7 +52,7 @@ public class AudioReceiveTest implements Runnable
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioReceiveTest ART = new AudioReceiveTest(10010, 10010, "192.168.0.2");
+		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
 		Thread thread = new Thread(ART);
 		thread.start();
 	}//}}}

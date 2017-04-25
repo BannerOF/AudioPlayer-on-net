@@ -30,7 +30,7 @@ public class ASoNPacket implements Comparable<ASoNPacket>
 	{ return Port; }//}}}
 	public int getHeader_serial()	//{{{
 	{ return serial; }		//}}}
-	public int getHeader_length()	//{{{
+	public short getHeader_length()	//{{{
 	{ return length; }		//}}}
 	public int compareTo(ASoNPacket a)//{{{
 	{
