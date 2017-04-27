@@ -43,6 +43,10 @@ public class ASoNProtocol
 						tempASoNPacket.setAddress(tempPacket.getAddress());
 						tempASoNPacket.setPort(tempPacket.getPort());
 						outputList.put(tempASoNPacket);
+						int i = netWorking.getReceiveBufSize();
+						int j = i % 1000;
+						if(j == 0)
+						{ System.out.println(i); }
 					}
 				}catch(Exception e){
 					e.printStackTrace();
