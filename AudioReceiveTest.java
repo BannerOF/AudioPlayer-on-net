@@ -53,9 +53,9 @@ public class AudioReceiveTest implements Runnable
 	public static void main(String args[])//{{{
 	{
 		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
-		try{
-			System.in.read();
-		}catch(Exception e) { e.printStackTrace(); }
+		//try{
+			//System.in.read();
+		//}catch(Exception e) { e.printStackTrace(); }
 		Thread thread = new Thread(ART);
 		thread.start();
 	}//}}}
