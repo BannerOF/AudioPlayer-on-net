@@ -32,7 +32,7 @@ public class AudioReceiveTest implements Runnable
 	{
 		try{
 			NetReceive = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
-			File file = new File("/test.wav");
+			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat();
 			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
@@ -53,9 +53,6 @@ public class AudioReceiveTest implements Runnable
 	public static void main(String args[])//{{{
 	{
 		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
-		//try{
-			//System.in.read();
-		//}catch(Exception e) { e.printStackTrace(); }
 		Thread thread = new Thread(ART);
 		thread.start();
 	}//}}}

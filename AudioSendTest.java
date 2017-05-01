@@ -15,7 +15,7 @@ public class AudioSendTest implements Runnable
 		try{
 			while(true)
 			{
-				byte[] readbuf = new byte[320];
+				byte[] readbuf = new byte[2000];
 				audioInputStream.read(readbuf, 0, readbuf.length);		
 				NetSend.sendData(readbuf);	
 				Thread.sleep(0,10);
@@ -29,7 +29,7 @@ public class AudioSendTest implements Runnable
 	{
 		try{
 			NetSend = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
-			File file = new File("/test.wav");
+			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat(); 
 			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
@@ -43,7 +43,7 @@ public class AudioSendTest implements Runnable
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioSendTest AST = new AudioSendTest(10011, 10010, "192.168.0.29");
+		AudioSendTest AST = new AudioSendTest(10011, 10010, "127.0.0.1");
 		Thread thread = new Thread(AST);
 		thread.start();	
 	}//}}}
