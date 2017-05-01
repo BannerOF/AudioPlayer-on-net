@@ -10,6 +10,21 @@ public class AudioSendTest implements Runnable
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
 
+	public void run()//{{{
+	{
+		try{
+			while(true)
+			{
+				byte[] readbuf = new byte[2000];
+				audioInputStream.read(readbuf, 0, readbuf.length);		
+				NetSend.sendData(readbuf);	
+				Thread.sleep(0,10);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}//}}}
 	public AudioSendTest(int tPort, int Port, String tAddress)//{{{
 	{
 		try{
@@ -25,21 +40,6 @@ public class AudioSendTest implements Runnable
 			}
 			NetSend.startWorking();
 		}catch(Exception e) { e.printStackTrace(); }
-	}//}}}
-	public void run()//{{{
-	{
-		try{
-			while(true)
-			{
-				byte[] readbuf = new byte[320];
-				audioInputStream.read(readbuf, 0, readbuf.length);		
-				NetSend.sendData(readbuf);	
-				Thread.sleep(0,10);
-			}
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 	}//}}}
 	public static void main(String args[])//{{{
 	{
