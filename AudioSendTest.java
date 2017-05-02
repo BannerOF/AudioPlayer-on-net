@@ -18,7 +18,7 @@ public class AudioSendTest implements Runnable
 				byte[] readbuf = new byte[2000];
 				if (audioInputStream.read(readbuf, 0, readbuf.length) == -1)
 				{
-					System.out.print("read the end");
+					System.out.print("Reading Over");
 					break;
 				}
 				NetSend.sendData(readbuf);	
@@ -47,7 +47,7 @@ public class AudioSendTest implements Runnable
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioSendTest AST = new AudioSendTest(10011, 10010, "192.168.0.43");
+		AudioSendTest AST = new AudioSendTest(10011, 10010, "192.168.0.29");
 		Thread thread = new Thread(AST);
 		thread.start();	
 	}//}}}

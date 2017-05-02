@@ -17,10 +17,19 @@ public class AudioReceiveTest implements Runnable
 	public void run()//{{{
 	{
 		try{
+			int temp = -1;
 			while(true)
 			{
 				ASoNPacket packet = NetReceive.getData();
 				byte[] data = packet.getData();
+				int serial = packet.getHeader_serial();
+				if(serial != temp + 1)
+				{
+					System.out.println("====");
+					System.out.println(serial);
+					System.out.println(serial-temp);
+				}
+				temp = serial;
 				sourceDataLine.write(data, 0, data.length);
 			}
 		}catch(Exception e)
