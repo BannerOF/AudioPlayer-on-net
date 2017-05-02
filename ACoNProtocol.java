@@ -3,6 +3,28 @@ import java.net.InetAddress;
 
 public class ACoNProtocol extends ASoNProtocol
 {
+	/**
+	 *	ACoNProtocol - Header
+	 *	+----------------------------------+
+	 *	|	 6 byte ASoNProtocol Header    | 
+	 *	+----------------------------------+
+	 *	|   1 byte ACoNProtocol CmdCode    |
+	 *	+----------------------------------+
+	 *	|		      CmdParam             |
+	 *	+----------------------------------+
+	 *
+	 *	ACoNProtocol - Cmd: AudioFormat
+	 *	+---------------------------------------------+
+	 *	|                 Header                      |
+	 *	+-------------------+-------------------------+
+	 *	| 4 byte sampleRate | 4 byte sampleSizeInBits |
+	 *	+-------------------+-------------------------+
+	 *	|  4 byte channels  |     4 byte frmeSize     | 
+	 *	+-------------------+-------------------------+
+	 *	| 4 byte frameRate  |     1 byte bigEndian    |
+	 *	+-------------------+-------------------------+
+	 *
+	 */
 	public static final byte CMD_AUDIOFORMAT = 0x01;
 	public static final byte CMD_COMMON = 0x0f;
 	public interface cmdListener
