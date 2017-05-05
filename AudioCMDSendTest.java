@@ -34,7 +34,7 @@ public class AudioCMDSendTest implements Runnable, ACoNProtocol.cmdListener
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioCMDSendTest ACMDST = new AudioCMDSendTest(10011, 10011, "192.168.0.20");
+		AudioCMDSendTest ACMDST = new AudioCMDSendTest(10011, 10010, "127.0.0.1");
 		Thread thread = new Thread(ACMDST);
 		thread.start();
 	}//}}}
