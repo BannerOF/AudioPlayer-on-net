@@ -11,7 +11,7 @@
     
 ## 2. 成果
   * ASoN协议 AudioStreamOnNet协议 网络音频流传输协议
-    * 基于UDP协议，具有ASoN协议头，包含包序列号。
+    * 基于UDP协议，具有ASoN协议头，包含包序列号，包长度。
     * ASoNPacket是ASoN协议的协议包。
   * ACoN协议 AudioControlOnNet协议 网络音频控制协议
-    * 测试中
+    * 测试通过的命令：AudioFormat 
