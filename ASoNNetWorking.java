@@ -1,5 +1,4 @@
 import java.net.*;
-import java.io.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ASoNNetWorking
@@ -20,7 +19,7 @@ public class ASoNNetWorking
 				try{
 					while(receiveFlag)
 					{
-						byte[] buf = new byte[1024];
+						byte[] buf = new byte[2048];
 						DatagramPacket temppacket = new DatagramPacket(buf, buf.length);
 						receiveSocket.receive(temppacket);				
 						dataBuffer.put(temppacket);	

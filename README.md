@@ -9,9 +9,22 @@
 ### 1.2 未来目标
 设计一套系统，可以截取系统声音，并将声音通过流媒体的形式转播出去。目标是实现一个可以共享声音的APP。
     
-## 2. 成果
-  * ASoN协议 AudioStreamOnNet协议 网络音频流传输协议
-    * 基于UDP协议，具有ASoN协议头，包含包序列号，包长度。
-    * ASoNPacket是ASoN协议的协议包。
-  * ACoN协议 AudioControlOnNet协议 网络音频控制协议
-    * 测试通过的命令：AudioFormat 
+## 2. API 
+### ACoNProtocol.java:ACoN控制协议类
+#### CMD_AUDIOFORMAT　传输音频流格式的命令代码  
+#### CMD_COMMON　通用自定义命令代码  
+#### cmdListener 命令回调函数接口  
+#### ACoNProtocol(int , int , InetAddress , cmdListener) 构造函数
+##### 参数：发送端口，接收端口，目的地址，命令处理监听器
+#### void sendCMD_AudioFormat(AudioFormat AF) 发送命令：音频格式
+##### 参数；发送的音频格式
+#### void startWorking() 初始化后组件开始工作 
+### ASoNProtocol.java:ASoN音频流媒体传输协议类
+#### HEADLENGTH 报头长度
+#### ASoNProtocol(int, int, InetAddress) 构造函数
+##### 参数：发送端口，接收端口，目的地址
+#### void startWorking() 初始化后组件开始工作
+#### void sendData(byte[]) 发送数据报
+##### 参数：数据报字节数组
+#### ASoNPacket getData() 接收数据报
+##### 返回值：ASoN数据报

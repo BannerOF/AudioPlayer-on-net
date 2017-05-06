@@ -1,5 +1,5 @@
 import javax.sound.sampled.AudioFormat;
-import java.net.*;
+import java.net.InetAddress;
 
 public class ACoNProtocol extends ASoNProtocol
 {
@@ -89,6 +89,11 @@ public class ACoNProtocol extends ASoNProtocol
 		byte[] temp = encoding.getBytes();
 		System.arraycopy(temp, 0, data, 22, temp.length);
 		sendData(data);
+	}//}}}
+	public void startWorking()//{{{
+	{
+		super.startWorking();
+		readCMD.start();
 	}//}}}
 	private void float2byte(float f, byte[] dest, int index)//{{{
 	{
