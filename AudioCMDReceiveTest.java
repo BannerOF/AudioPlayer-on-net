@@ -40,6 +40,8 @@ public class AudioCMDReceiveTest implements ACoNProtocol.cmdListener,Runnable
 		try {
 			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
+
+			audioInputStream = AudioSystem.getAudioInputStream(AF, audioInputStream);
 			DataLine.Info dataLineInfo;
 			dataLineInfo = new DataLine.Info(
 				SourceDataLine.class, AF,
@@ -47,7 +49,7 @@ public class AudioCMDReceiveTest implements ACoNProtocol.cmdListener,Runnable
 			sourceDataLine = (SourceDataLine)AudioSystem.getLine(dataLineInfo);
 			sourceDataLine.open(AF);
 			sourceDataLine.start();
-			Thread ACMDR = new Thread(this );
+			Thread ACMDR = new Thread(this);
 			ACMDR.start();
 		} catch(Exception e){
 			e.printStackTrace();
