@@ -43,7 +43,7 @@ public class AudioSendTest implements Runnable
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioSendTest AST = new AudioSendTest(10011, 10010, "127.0.0.1");
+		AudioSendTest AST = new AudioSendTest(10011, 10010, "59.71.142.58");
 		Thread thread = new Thread(AST);
 		thread.start();	
 	}//}}}
