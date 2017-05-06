@@ -38,7 +38,7 @@ public class AudioCMDReceiveTest implements ACoNProtocol.cmdListener,Runnable
 	public void onReceiveCMD_AudioFormat(AudioFormat AF)//{{{
 	{
 		try {
-			File file = new File("/test.wav");
+			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			DataLine.Info dataLineInfo;
 			dataLineInfo = new DataLine.Info(

@@ -13,7 +13,7 @@ public class AudioCMDSendTest implements Runnable, ACoNProtocol.cmdListener
 	public void run()//{{{
 	{
 		try{
-			File file = new File("/test.wav");
+			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat();
 			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
