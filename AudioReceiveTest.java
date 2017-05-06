@@ -61,7 +61,7 @@ public class AudioReceiveTest implements Runnable
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "192.168.0.2");
+		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "171.113.100.102");
 		Thread thread = new Thread(ART);
 		thread.start();
 	}//}}}
