@@ -15,7 +15,8 @@ public class AudioSendTest implements Runnable
 		try{
 			while(true)
 			{
-				byte[] readbuf = new byte[2000];
+				//byte[] readbuf = new byte[2000];//this for long range transmitting
+				byte[] readbuf = new byte[320];// this for short range transmitting
 				if (audioInputStream.read(readbuf, 0, readbuf.length) == -1)
 				{
 					System.out.print("Reading Over");
@@ -48,6 +49,7 @@ public class AudioSendTest implements Runnable
 	public static void main(String args[])//{{{
 	{
 		AudioSendTest AST = new AudioSendTest(10011, 10010, "59.71.142.58");
+		//AudioSendTest AST = new AudioSendTest(10011, 10010, "127.0.0.1");
 		Thread thread = new Thread(AST);
 		thread.start();	
 	}//}}}

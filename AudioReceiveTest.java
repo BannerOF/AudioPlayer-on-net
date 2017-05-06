@@ -26,8 +26,8 @@ public class AudioReceiveTest implements Runnable
 				if(serial != temp + 1)
 				{
 					System.out.println("====");
-					System.out.println(serial);
-					System.out.println(serial-temp);
+					System.out.println("serial:"+serial);
+					System.out.println("drop:"+(serial-temp));
 				}
 				temp = serial;
 				sourceDataLine.write(data, 0, data.length);
@@ -62,6 +62,7 @@ public class AudioReceiveTest implements Runnable
 	public static void main(String args[])//{{{
 	{
 		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "171.113.100.102");
+		//AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
 		Thread thread = new Thread(ART);
 		thread.start();
 	}//}}}
