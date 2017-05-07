@@ -17,19 +17,19 @@ public class AudioReceiveTest implements Runnable, ACoNProtocol.cmdListener
 	public void run()//{{{
 	{
 		try{
-			int temp = -1;
+			//int temp = -1;
 			while(true)
 			{
 				ASoNPacket packet = NetReceive.getData();
 				byte[] data = packet.getData();
-				int serial = packet.getHeader_serial();
-				if(serial != temp + 1)
-				{
-					System.out.println("====");
-					System.out.println("serial:"+serial);
-					System.out.println("drop:"+(serial-temp));
-				}
-				temp = serial;
+				//int serial = packet.getHeader_serial();
+				//if(serial != temp + 1)
+				//{
+					//System.out.println("====");
+					//System.out.println("serial:"+serial);
+					//System.out.println("drop:"+(serial-temp));
+				//}
+				//temp = serial;
 				sourceDataLine.write(data, 0, data.length);
 			}
 		}catch(Exception e)
