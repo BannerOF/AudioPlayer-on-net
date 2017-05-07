@@ -17,8 +17,8 @@ public class AudioSendTest implements Runnable
 			NetControl.sendCMD_AudioFormat(audioFormat);
 			while(true)
 			{
-				//byte[] readbuf = new byte[2000];//this for long range transmitting
-				byte[] readbuf = new byte[320];// this for short range transmitting
+				byte[] readbuf = new byte[2000];//this for long range transmitting
+				//byte[] readbuf = new byte[320];// this for short range transmitting
 				if (audioInputStream.read(readbuf, 0, readbuf.length) == -1)
 				{
 					System.out.print("Reading Over");
@@ -35,8 +35,8 @@ public class AudioSendTest implements Runnable
 	public AudioSendTest(int sPort, int cPort, String tAddress)//{{{
 	{
 		try{
-			NetSend = new ASoNProtocol(sPort, sPort, InetAddress.getByName(tAddress));
-			NetControl = new ACoNProtocol(cPort, cPort, InetAddress.getByName(tAddress), null);
+			NetSend = new ASoNProtocol(sPort, sPort+10, InetAddress.getByName(tAddress));
+			NetControl = new ACoNProtocol(cPort, cPort+10, InetAddress.getByName(tAddress), null);
 
 			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);

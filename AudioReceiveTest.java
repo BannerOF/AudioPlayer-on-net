@@ -40,8 +40,8 @@ public class AudioReceiveTest implements Runnable, ACoNProtocol.cmdListener
 	public AudioReceiveTest(int sPort, int cPort, String tAddress)//{{{
 	{
 		try{
-			NetReceive = new ASoNProtocol(sPort, sPort, InetAddress.getByName(tAddress));
-			NetControl = new ACoNProtocol(cPort, cPort, InetAddress.getByName(tAddress), this);
+			NetReceive = new ASoNProtocol(sPort+10, sPort, InetAddress.getByName(tAddress));
+			NetControl = new ACoNProtocol(cPort+10, cPort, InetAddress.getByName(tAddress), this);
 			NetReceive.startWorking();
 			NetControl.startWorking();
 		}catch(Exception e){ e.printStackTrace(); }
