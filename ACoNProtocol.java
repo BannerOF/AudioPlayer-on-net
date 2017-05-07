@@ -3,6 +3,28 @@ import java.net.InetAddress;
 
 public class ACoNProtocol extends ASoNProtocol
 {
+	/**
+	 *	ACoNProtocol - Header
+	 *	+----------------------------------+
+	 *	|	 6 byte ASoNProtocol Header    | 
+	 *	+----------------------------------+
+	 *	|   1 byte ACoNProtocol CmdCode    |
+	 *	+----------------------------------+
+	 *	|		      CmdParam             |
+	 *	+----------------------------------+
+	 *
+	 *	ACoNProtocol - Cmd: AudioFormat
+	 *	+---------------------------------------------+
+	 *	|                 Header                      |
+	 *	+-------------------+-------------------------+
+	 *	| 4 byte sampleRate | 4 byte sampleSizeInBits |
+	 *	+-------------------+-------------------------+
+	 *	|  4 byte channels  |     4 byte frmeSize     | 
+	 *	+-------------------+-------------------------+
+	 *	| 4 byte frameRate  |     1 byte bigEndian    |
+	 *	+-------------------+-------------------------+
+	 *
+	 */
 	public static final byte CMD_AUDIOFORMAT = 0x01;
 	public static final byte CMD_COMMON = 0x0f;
 	public interface cmdListener
@@ -61,13 +83,27 @@ public class ACoNProtocol extends ASoNProtocol
 		byte[] temp = new byte[data.length-21];
 		System.arraycopy(data, 21, temp, 0, data.length-21);
 		String encoding = new String(temp);
-		return new AudioFormat(new AudioFormat.Encoding(encoding),
+		//System.out.println(sampleRate);
+		//System.out.println(sampleSizeInBits);
+		//System.out.println(channels);
+		//System.out.println(frmeSize);
+		//System.out.println(frameRate);
+		//System.out.println(bigEndian);
+		//System.out.println(encoding);
+		return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
 							   sampleRate,
 							   sampleSizeInBits,
 							   channels,
 							   frmeSize,
 							   frameRate,
 							   bigEndian);
+		//return new AudioFormat(new AudioFormat.Encoding(encoding),
+							   //sampleRate,
+							   //sampleSizeInBits,
+							   //channels,
+							   //frmeSize,
+							   //frameRate,
+							   //bigEndian);
 	}//}}}
 	public void sendCMD_AudioFormat(AudioFormat AF)//{{{
 	{	
@@ -88,6 +124,12 @@ public class ACoNProtocol extends ASoNProtocol
 		data[21] = bigEndian ? (byte)0x01 : (byte)0x00;
 		byte[] temp = encoding.getBytes();
 		System.arraycopy(temp, 0, data, 22, temp.length);
+		//System.out.println(encoding);
+		//System.out.println(sampleRate);
+		//System.out.println(sampleSizeInBits);
+		//System.out.println(channels);
+		//System.out.println(frmeSize);
+		//System.out.println(bigEndian);
 		sendData(data);
 	}//}}}
 	public void startWorking()//{{{
