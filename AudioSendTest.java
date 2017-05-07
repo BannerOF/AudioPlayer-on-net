@@ -7,12 +7,14 @@ import javax.sound.sampled.AudioSystem;
 public class AudioSendTest implements Runnable
 {
 	private ASoNProtocol NetSend; 
+	private ACoNProtocol NetControl;
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
 
 	public void run()//{{{
 	{
 		try{
+			NetControl.sendCMD_AudioFormat(audioFormat);
 			while(true)
 			{
 				//byte[] readbuf = new byte[2000];//this for long range transmitting
@@ -30,10 +32,12 @@ public class AudioSendTest implements Runnable
 			e.printStackTrace();
 		}
 	}//}}}
-	public AudioSendTest(int tPort, int Port, String tAddress)//{{{
+	public AudioSendTest(int sPort, int cPort, String tAddress)//{{{
 	{
 		try{
-			NetSend = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
+			NetSend = new ASoNProtocol(sPort, sPort, InetAddress.getByName(tAddress));
+			NetControl = new ACoNProtocol(cPort, cPort, InetAddress.getByName(tAddress), null);
+
 			File file = new File("/liangcheng.mp3");
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat(); 
@@ -44,12 +48,13 @@ public class AudioSendTest implements Runnable
 				audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 			}
 			NetSend.startWorking();
+			NetControl.startWorking();
 		}catch(Exception e) { e.printStackTrace(); }
 	}//}}}
 	public static void main(String args[])//{{{
 	{
-		AudioSendTest AST = new AudioSendTest(10011, 10010, "59.71.142.58");
-		//AudioSendTest AST = new AudioSendTest(10011, 10010, "127.0.0.1");
+		//AudioSendTest AST = new AudioSendTest(10010, 10011, "59.71.142.58");
+		AudioSendTest AST = new AudioSendTest(10010, 10011, "127.0.0.1");
 		Thread thread = new Thread(AST);
 		thread.start();	
 	}//}}}

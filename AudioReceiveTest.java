@@ -6,13 +6,13 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
-public class AudioReceiveTest implements Runnable
+public class AudioReceiveTest implements Runnable, ACoNProtocol.cmdListener
 {
-	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
 	private SourceDataLine sourceDataLine;
 	private DataLine.Info dataLineInfo;
 	private ASoNProtocol NetReceive;
+	private ACoNProtocol NetControl;
 
 	public void run()//{{{
 	{
@@ -37,33 +37,34 @@ public class AudioReceiveTest implements Runnable
 			e.printStackTrace();
 		}
 	}//}}}
-	public AudioReceiveTest(int tPort, int Port, String tAddress)//{{{
+	public AudioReceiveTest(int sPort, int cPort, String tAddress)//{{{
 	{
 		try{
-			NetReceive = new ASoNProtocol(tPort, Port, InetAddress.getByName(tAddress));
-			File file = new File("/liangcheng.mp3");
-			audioInputStream = AudioSystem.getAudioInputStream(file);
-			audioFormat = audioInputStream.getFormat();
-			if(audioFormat.getEncoding() != AudioFormat.Encoding.PCM_SIGNED)
-			{
-				audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,audioFormat.getSampleRate(),
-						16,audioFormat.getChannels(),audioFormat.getChannels()*2,audioFormat.getSampleRate(),false);
-				audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
-			}
+			NetReceive = new ASoNProtocol(sPort, sPort, InetAddress.getByName(tAddress));
+			NetControl = new ACoNProtocol(cPort, cPort, InetAddress.getByName(tAddress), this);
+			NetReceive.startWorking();
+			NetControl.startWorking();
+		}catch(Exception e){ e.printStackTrace(); }
+	}//}}}
+	public static void main(String args[])//{{{
+	{
+		//AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "171.113.100.102");
+		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
+	}//}}}
+	public void onReceiveCMD_AudioFormat(AudioFormat audioFormat) {//{{{
+		try {
+			this.audioFormat = audioFormat;
 			dataLineInfo = new DataLine.Info(
 				SourceDataLine.class, audioFormat,
 				AudioSystem.NOT_SPECIFIED);
 			sourceDataLine = (SourceDataLine)AudioSystem.getLine(dataLineInfo);
 			sourceDataLine.open(audioFormat);
 			sourceDataLine.start();
-			NetReceive.startWorking();
-		}catch(Exception e){ e.printStackTrace(); }
+			Thread player = new Thread(this);
+			player.start();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}//}}}
-	public static void main(String args[])//{{{
-	{
-		AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "171.113.100.102");
-		//AudioReceiveTest ART = new AudioReceiveTest(10010, 10011, "127.0.0.1");
-		Thread thread = new Thread(ART);
-		thread.start();
-	}//}}}
+	public void onReceiveCMD_Common(byte[] param) { }
 }
