@@ -1,5 +1,5 @@
-import javax.sound.sampled.AudioFormat;
 import java.net.InetAddress;
+import javax.sound.sampled.AudioFormat;
 
 public class ACoNProtocol extends ASoNProtocol
 {
@@ -83,13 +83,9 @@ public class ACoNProtocol extends ASoNProtocol
 		byte[] temp = new byte[data.length-21];
 		System.arraycopy(data, 21, temp, 0, data.length-21);
 		String encoding = new String(temp);
-		//System.out.println(sampleRate);
-		//System.out.println(sampleSizeInBits);
-		//System.out.println(channels);
-		//System.out.println(frmeSize);
-		//System.out.println(frameRate);
-		//System.out.println(bigEndian);
-		//System.out.println(encoding);
+		System.out.println("ACoN-receive-AUDIOFORMAT:"+" "+sampleRate+" "+
+				sampleSizeInBits+" "+channels+" "+
+				frmeSize+" "+frameRate+" "+bigEndian+" "+encoding);
 		return new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
 							   sampleRate,
 							   sampleSizeInBits,
@@ -97,13 +93,13 @@ public class ACoNProtocol extends ASoNProtocol
 							   frmeSize,
 							   frameRate,
 							   bigEndian);
-		//return new AudioFormat(new AudioFormat.Encoding(encoding),
-							   //sampleRate,
-							   //sampleSizeInBits,
-							   //channels,
-							   //frmeSize,
-							   //frameRate,
-							   //bigEndian);
+	}//}}}
+	public void sendCMD_Common(byte[] param)//{{{
+	{
+		byte[] data = new byte[param.length+1];
+		data[0] = CMD_COMMON;
+		System.arraycopy(param, 0, data, 1, param.length);
+		sendData(data);
 	}//}}}
 	public void sendCMD_AudioFormat(AudioFormat AF)//{{{
 	{	
@@ -124,16 +120,14 @@ public class ACoNProtocol extends ASoNProtocol
 		data[21] = bigEndian ? (byte)0x01 : (byte)0x00;
 		byte[] temp = encoding.getBytes();
 		System.arraycopy(temp, 0, data, 22, temp.length);
-		//System.out.println(encoding);
-		//System.out.println(sampleRate);
-		//System.out.println(sampleSizeInBits);
-		//System.out.println(channels);
-		//System.out.println(frmeSize);
-		//System.out.println(bigEndian);
+		System.out.println("ACoN-send-AUDIOFORMAT:"+" "+sampleRate+" "+
+				sampleSizeInBits+" "+channels+" "+
+				frmeSize+" "+frameRate+" "+bigEndian+" "+encoding);
 		sendData(data);
 	}//}}}
 	public void startWorking()//{{{
 	{
+		System.out.println("ACoN-receiving...");
 		super.startWorking();
 		readCMD.start();
 	}//}}}

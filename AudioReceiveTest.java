@@ -13,23 +13,20 @@ public class AudioReceiveTest implements Runnable, ACoNProtocol.cmdListener
 	private DataLine.Info dataLineInfo;
 	private ASoNProtocol NetReceive;
 	private ACoNProtocol NetControl;
+	private int lost = 0;
 
 	public void run()//{{{
 	{
 		try{
-			//int temp = -1;
+			int temp = -1;
 			while(true)
 			{
 				ASoNPacket packet = NetReceive.getData();
 				byte[] data = packet.getData();
-				//int serial = packet.getHeader_serial();
-				//if(serial != temp + 1)
-				//{
-					//System.out.println("====");
-					//System.out.println("serial:"+serial);
-					//System.out.println("drop:"+(serial-temp));
-				//}
-				//temp = serial;
+				int serial = packet.getHeader_serial();
+				if(serial != temp + 1)
+					lost += 1 + serial - temp;
+				temp = serial;
 				sourceDataLine.write(data, 0, data.length);
 			}
 		}catch(Exception e)
@@ -66,5 +63,15 @@ public class AudioReceiveTest implements Runnable, ACoNProtocol.cmdListener
 			e.printStackTrace();
 		}
 	}//}}}
-	public void onReceiveCMD_Common(byte[] param) { }
+	public void onReceiveCMD_Common(byte[] param) {//{{{
+		//send lost packet num
+		System.out.println("ACoN-receive-SendOver");
+		byte[] data = new byte[4];			
+		data[0] = (byte) (lost & 0xff);    
+		data[1] = (byte) (lost >> 8 & 0xff);    
+		data[2] = (byte) (lost >> 16 & 0xff);    
+		data[3] = (byte) (lost >> 24 & 0xff);    
+		System.out.println("ACoN-send-LostNum");
+		NetControl.sendCMD_Common(data);
+	}//}}}
 }

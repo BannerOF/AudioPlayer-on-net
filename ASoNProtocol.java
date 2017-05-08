@@ -124,4 +124,6 @@ public class ASoNProtocol
 		}
 		return null;
 	}//}}}
+	public int getSerial() //{{{
+	{ return serial; }//}}}
 }
